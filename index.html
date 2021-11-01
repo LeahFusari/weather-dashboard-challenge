@@ -21,7 +21,7 @@
             <div class="card-body">
               <h2 class="card-title fw-bold">Search for a City:</h2>
               <input id="iptCurrCity" class = "border border-dark" style="width: 100%; height: 45px;">
-              <button type="button" class="btn btn-info" style="width: 100%; height: 45px;" >Get Weather</button>
+              <button id="get-weather" type="button" class="btn btn-info" style="width: 100%; height: 45px;" >Get Weather</button>
             </div>
         </div>
         <div id="button-area" class="border border-warning" style = "height: 300px;"></div>
@@ -31,7 +31,7 @@
     <!-- Current weather -->
     <div id="container" class="row col-9 border border-warning" style="height: 565px;">
         <h2 class="city-date fw-bold">City - Date Placeholder</h2>
-        <ul class="border border-dark" style=" height:200px;"></ul> 
+        <ul id="curr-weather-ul" class="border border-dark" style=" height:200px;"></ul> 
         <!-- create list items dynamiclly -->
         <h3 class="five-day fw-bold">Five-Day Forecast</h3>
         

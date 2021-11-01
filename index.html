@@ -6,66 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Document</title>
+    <title>Weather Dashboard</title>
 </head>
  
-
+<!-- Header -->
 <body class = "row">
     <div id="header" style="height: 100px;" class = "row bg-primary d-flex align-items-center">
         <h1 class="h-50 d-flex justify-content-center">Weather Dashboard</h1>
     </div>
 
+    <!-- Search box and previous searches button area -->
     <div id="container" style="height: 565px;" class=" row col-3 border border-primary border-3">
         <div class="card border border-primary" style=" height: 255px;">
             <div class="card-body">
               <h2 class="card-title fw-bold">Search for a City:</h2>
-              <input class = "border border-dark" style="width: 100%; height: 45px;">
-              <button type="button" class="btn btn-info" style="width: 100%; height: 45px;" >Info</button>
+              <input id="iptCurrCity" class = "border border-dark" style="width: 100%; height: 45px;">
+              <button type="button" class="btn btn-info" style="width: 100%; height: 45px;" >Get Weather</button>
             </div>
         </div>
         <div id="button-area" class="border border-warning" style = "height: 300px;"></div>
           
     </div>
 
+    <!-- Current weather -->
     <div id="container" class="row col-9 border border-warning" style="height: 565px;">
         <h2 class="city-date fw-bold">City - Date Placeholder</h2>
         <ul class="border border-dark" style=" height:200px;"></ul> 
         <!-- create list items dynamiclly -->
         <h3 class="five-day fw-bold">Five-Day Forecast</h3>
         
-        <div id="five-day-container" class="row d-flex justify-content-evenly">
-            <div class="col-2 row list-group">
+        <!-- five day forecast card area -->
+        <div id="five-day-forecast" class="row d-flex justify-content-evenly">
+            <!-- <div class="col-2 list-group">
                 <h5>List heading</h5>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
             </div>
-            <div class="col-2 row list-group">
+            <div class="col-2 list-group">
                 <h5>List heading</h5>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
             </div>
-            <div class="col-2 row list-group">
+            <div class="col-2 list-group">
                 <h5>List heading</h5>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
             </div>
-            <div class="col-2 row list-group">
+            <div class="col-2 list-group">
                 <h5>List heading</h5>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
             </div>
-            <div class="col-2 row list-group">
+            <div class="col-2 list-group">
                 <h5>List heading</h5>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
                 <p class="mb-1">placeholder content.</p>
-            </div>
+            </div> -->
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./assets/script/script.js"></script>
 
 </body>
 

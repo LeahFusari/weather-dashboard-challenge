@@ -1,16 +1,18 @@
 const apiKey = "443ca5186866a70d54e25c4442078beb"
-var city = $("#input-city").val();
+var cityEl = document.getElementById("input-city")
 var fiveDayEl=document.getElementById("five-day-forecast");
+var searchButton=document.getElementById("get-weather");
+var searchHistory = JSON.parse(localStorage.getItem("prevSearch")) || [];
 
-$("#get-weather").click(function(){
-    displayCurrent()
-  //   fiveDayForecast()
+searchButton.addEventListener("click", function(){
+   displayWeather()
+   storeCity()
 })
 
-function displayCurrent(){
-   
+// functions to fetch APIs and display current and forecast weather.
+function displayWeather(){
+   var city = cityEl.value;
     var request1URL = "https://api.openweathermap.org/data/2.5/weather?q="+ city + ",us&units=imperial&appid=" + apiKey;
-  
     fetch(request1URL)
 
     .then(function(response1){
@@ -54,9 +56,10 @@ function displayCurrent(){
     })
 }
 
+// function to display 5-day forecast dynamically
+
 function fiveDayForecast(forecast){
-    // var fiveDayArr=[];
-    // console.log("this is 5 day forecast", forecast)
+
     for(i=1; i<6; i++){
         console.log(forecast[i]);
         var unixDate=forecast[i].dt;
@@ -92,8 +95,15 @@ function fiveDayForecast(forecast){
         cardEl.appendChild(tempEl);
         cardEl.appendChild(windEl);
         cardEl.appendChild(humidEl);
-        
-
-
+    
     }
 }
+
+    // store search data in local storage
+
+    function storeCity() {
+        var searchTerm = cityEl.value;
+        searchHistory.push(searchTerm);
+        localStorage.setItem("prevSearch", JSON.stringify(searchHistory));
+        console.log(searchHistory);
+    }

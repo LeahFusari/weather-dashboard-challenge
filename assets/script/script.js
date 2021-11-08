@@ -60,19 +60,39 @@ function fiveDayForecast(forecast){
     for(i=1; i<6; i++){
         console.log(forecast[i]);
         var unixDate=forecast[i].dt;
-        var currDate=moment.unix(unixDate).format("MM/DD/YYYY");
-        console.log(currDate);
-
+        var forecastDate=moment.unix(unixDate).format("MM/DD/YYYY");
+        var forecastTemp=forecast[i].temp.day;
+        var forecastWind=forecast[i].wind_speed;
+        var forecastHumid=forecast[i].humidity;
+       
         var cardEl=document.createElement("div");
-        var dateEl=document.createElement("h2");
+        var dateEl=document.createElement("h5");
         var imgEl=document.createElement("img");
+        var tempEl=document.createElement("p");
+        var windEl=document.createElement("p");
+        var humidEl=document.createElement("p");
+
+
+
         var icon=forecast[i].weather[0].icon;
         var iconurl = "http://openweathermap.org/img/w/" + icon + ".png";
+        
+        dateEl.textContent=forecastDate;
         imgEl.src=iconurl;
-        dateEl.textContent=currDate;
+        tempEl.textContent= "Temp: " + forecastTemp;
+        windEl.textContent= "Wind: " + forecastWind+ " MPH";
+        humidEl.textContent= "Humidity: " + forecastHumid + "%";
+
+        
+   
+
+        fiveDayEl.appendChild(cardEl);
         cardEl.appendChild(dateEl);
         cardEl.appendChild(imgEl);
-        fiveDayEl.appendChild(cardEl);
+        cardEl.appendChild(tempEl);
+        cardEl.appendChild(windEl);
+        cardEl.appendChild(humidEl);
+        
 
 
     }

@@ -12,6 +12,8 @@ searchButton.addEventListener("click", function(){
 // functions to fetch APIs and display current and forecast weather.
 function displayWeather(){
    var city = cityEl.value;
+
+   
     var request1URL = "https://api.openweathermap.org/data/2.5/weather?q="+ city + ",us&units=imperial&appid=" + apiKey;
     fetch(request1URL)
 
@@ -59,7 +61,7 @@ function displayWeather(){
 // function to display 5-day forecast dynamically
 
 function fiveDayForecast(forecast){
-
+    fiveDayEl.innerHTML=" ";
     for(i=1; i<6; i++){
         console.log(forecast[i]);
         var unixDate=forecast[i].dt;
@@ -67,7 +69,8 @@ function fiveDayForecast(forecast){
         var forecastTemp=forecast[i].temp.day;
         var forecastWind=forecast[i].wind_speed;
         var forecastHumid=forecast[i].humidity;
-       
+
+        
         var cardEl=document.createElement("div");
         var dateEl=document.createElement("h5");
         var imgEl=document.createElement("img");
@@ -103,7 +106,12 @@ function fiveDayForecast(forecast){
 
     function storeCity() {
         var searchTerm = cityEl.value;
-        searchHistory.push(searchTerm);
+
+        if(searchHistory.indexOf(searchTerm.toLowerCase()) !== -1){
+            console.log("Not added to local storage because previous search already exists");
+        }else{
+        searchHistory.push(searchTerm.toLowerCase());
         localStorage.setItem("prevSearch", JSON.stringify(searchHistory));
         console.log(searchHistory);
+        }
     }

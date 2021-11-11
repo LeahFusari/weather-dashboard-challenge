@@ -3,10 +3,15 @@ var cityEl = document.getElementById("input-city")
 var fiveDayEl=document.getElementById("five-day-forecast");
 var searchButton=document.getElementById("get-weather");
 var searchHistory = JSON.parse(localStorage.getItem("prevSearch")) || [];
+var prevSearchEl = document.getElementById("prev-searches");
+
+onload = displayPrevSearches
 
 searchButton.addEventListener("click", function(){
    displayWeather()
    storeCity()
+   addLastSearch()
+//    displayPrevSearches()
 })
 
 // functions to fetch APIs and display current and forecast weather.
@@ -39,7 +44,7 @@ function displayWeather(){
         currWethEl.appendChild(currTemp);
         currWethEl.appendChild(currWind);
         currWethEl.appendChild(currHumid);
-        console.log(response1);
+        // console.log(response1);
 
         fetch(request2URL)
 
@@ -51,7 +56,7 @@ function displayWeather(){
         var currUVI=document.createElement("li");
         currUVI.textContent= "Current UV Index: "+ response2.current.uvi;
         currWethEl.appendChild(currUVI);
-        console.log(response2);
+        // console.log(response2);
 
         fiveDayForecast(response2.daily)
         })
@@ -63,7 +68,7 @@ function displayWeather(){
 function fiveDayForecast(forecast){
     fiveDayEl.innerHTML=" ";
     for(i=1; i<6; i++){
-        console.log(forecast[i]);
+        // console.log(forecast[i]);
         var unixDate=forecast[i].dt;
         var forecastDate=moment.unix(unixDate).format("MM/DD/YYYY");
         var forecastTemp=forecast[i].temp.day;
@@ -77,9 +82,6 @@ function fiveDayForecast(forecast){
         var tempEl=document.createElement("p");
         var windEl=document.createElement("p");
         var humidEl=document.createElement("p");
-
-
-
         var icon=forecast[i].weather[0].icon;
         var iconurl = "http://openweathermap.org/img/w/" + icon + ".png";
         
@@ -114,4 +116,30 @@ function fiveDayForecast(forecast){
         localStorage.setItem("prevSearch", JSON.stringify(searchHistory));
         console.log(searchHistory);
         }
+        
     }
+
+    function displayPrevSearches(){
+        for(i=0; i<searchHistory.length; i++){
+            var prevItem = searchHistory[i];
+            var prevItemEl=document.createElement("button");
+            
+                prevItemEl.textContent = prevItem;
+
+                if(prevItemEl === prevSearchEl.children){
+                    console.log("not added to prev Search")
+                }else{
+                prevSearchEl.appendChild(prevItemEl);
+                }
+         console.log(prevItem);
+    }
+}
+
+function addLastSearch(){
+    var lastItem = searchHistory[searchHistory.length -1]
+    var lastItemEl=document.createElement("button");
+
+    lastItemEl.textContent=lastItem;
+    prevSearchEl.appendChild(lastItemEl);
+    console.log(lastItem);
+}

@@ -91,9 +91,6 @@ function fiveDayForecast(forecast){
         windEl.textContent= "Wind: " + forecastWind+ " MPH";
         humidEl.textContent= "Humidity: " + forecastHumid + "%";
 
-        
-   
-
         fiveDayEl.appendChild(cardEl);
         cardEl.appendChild(dateEl);
         cardEl.appendChild(imgEl);
@@ -119,19 +116,28 @@ function fiveDayForecast(forecast){
         
     }
 
+    
+
     function displayPrevSearches(){
         for(i=0; i<searchHistory.length; i++){
             var prevItem = searchHistory[i];
             var prevItemEl=document.createElement("button");
-            
+
                 prevItemEl.textContent = prevItem;
+                prevItemEl.setAttribute("value", prevItem);
 
                 if(prevItemEl === prevSearchEl.children){
                     console.log("not added to prev Search")
                 }else{
                 prevSearchEl.appendChild(prevItemEl);
                 }
-         console.log(prevItem);
+
+                prevItemEl.addEventListener("click", function(event){
+                     var searchPrev=event.target.value;
+                    cityEl.value = searchPrev;
+                    displayWeather();
+                    console.log(cityEl.value);
+                    })
     }
 }
 
@@ -139,7 +145,17 @@ function addLastSearch(){
     var lastItem = searchHistory[searchHistory.length -1]
     var lastItemEl=document.createElement("button");
 
+    lastItemEl.setAttribute("value",lastItem);
     lastItemEl.textContent=lastItem;
     prevSearchEl.appendChild(lastItemEl);
     console.log(lastItem);
+
+    lastItemEl.addEventListener("click", function(event){
+        var lastSearch=event.target.value;
+       cityEl.value = lastSearch;
+       displayWeather();
+       console.log(cityEl.value);
+       })
 }
+
+

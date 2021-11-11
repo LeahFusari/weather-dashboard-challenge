@@ -4,28 +4,27 @@ var fiveDayEl=document.getElementById("five-day-forecast");
 var searchButton=document.getElementById("get-weather");
 var searchHistory = JSON.parse(localStorage.getItem("prevSearch")) || [];
 var prevSearchEl = document.getElementById("prev-searches");
+var cityDate = document.getElementById("city-date");
 
 onload = displayPrevSearches
 
 searchButton.addEventListener("click", function(){
+    
    displayWeather()
    storeCity()
    addLastSearch()
-//    displayPrevSearches()
 })
 
 // functions to fetch APIs and display current and forecast weather.
 function displayWeather(){
    var city = cityEl.value;
-
-   
-    var request1URL = "https://api.openweathermap.org/data/2.5/weather?q="+ city + ",us&units=imperial&appid=" + apiKey;
+   var request1URL = "https://api.openweathermap.org/data/2.5/weather?q="+ city + ",us&units=imperial&appid=" + apiKey;
     fetch(request1URL)
-
+ 
     .then(function(response1){
         return response1.json();
     })
-
+    
     .then(function(response1){
         var currWethEl= document.querySelector("#curr-weather-ul");
         var lat=response1.coord.lat;
@@ -44,8 +43,7 @@ function displayWeather(){
         currWethEl.appendChild(currTemp);
         currWethEl.appendChild(currWind);
         currWethEl.appendChild(currHumid);
-        // console.log(response1);
-
+        
         fetch(request2URL)
 
         .then(function(response2) {
@@ -53,14 +51,30 @@ function displayWeather(){
           })
         
         .then(function(response2){
-        var currUVI=document.createElement("li");
-        currUVI.textContent= "Current UV Index: "+ response2.current.uvi;
+        var currUVIli=document.createElement("span")
+        var currUVI=document.createElement("span");
+        currUVIli.textContent="Current UV Index: "
+        currUVI.textContent= response2.current.uvi;
+        currUVI.setAttribute("id", "UVI-span")
+        currWethEl.appendChild(currUVIli);
         currWethEl.appendChild(currUVI);
-        // console.log(response2);
-
+        
+        if (response2.current.uvi < 4 ) {
+            currUVI.setAttribute("class", "badge bg-success");
+        }
+        else if (response2.current.uvi < 8) {
+            currUVI.setAttribute("class", "badge bg-warning text-dark");
+        }
+        else {
+            currUVI.setAttribute("class", "badge bg-danger");
+        }
+        console.log(response2)
         fiveDayForecast(response2.daily)
         })
+    
+        cityDate.textContent= city + " - " + moment().format('MMMM Do YYYY');
     })
+    
 }
 
 // function to display 5-day forecast dynamically
@@ -71,6 +85,7 @@ function fiveDayForecast(forecast){
         // console.log(forecast[i]);
         var unixDate=forecast[i].dt;
         var forecastDate=moment.unix(unixDate).format("MM/DD/YYYY");
+    
         var forecastTemp=forecast[i].temp.day;
         var forecastWind=forecast[i].wind_speed;
         var forecastHumid=forecast[i].humidity;
@@ -106,7 +121,7 @@ function fiveDayForecast(forecast){
     function storeCity() {
         var searchTerm = cityEl.value;
 
-        if(searchHistory.indexOf(searchTerm.toLowerCase()) !== -1){
+        if(searchHistory.indexOf(searchTerm.toLowerCase()) !== -1 || searchTerm === ""){
             console.log("Not added to local storage because previous search already exists");
         }else{
         searchHistory.push(searchTerm.toLowerCase());
@@ -124,13 +139,9 @@ function fiveDayForecast(forecast){
             var prevItemEl=document.createElement("button");
 
                 prevItemEl.textContent = prevItem;
-                prevItemEl.setAttribute("value", prevItem);
-
-                if(prevItemEl === prevSearchEl.children){
-                    console.log("not added to prev Search")
-                }else{
+                prevItemEl.setAttribute("value", prevItem)
                 prevSearchEl.appendChild(prevItemEl);
-                }
+                
 
                 prevItemEl.addEventListener("click", function(event){
                      var searchPrev=event.target.value;

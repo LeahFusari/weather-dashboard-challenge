@@ -6,13 +6,14 @@ var searchHistory = JSON.parse(localStorage.getItem("prevSearch")) || [];
 var prevSearchEl = document.getElementById("prev-searches");
 var cityDate = document.getElementById("city-date");
 
+
+
 onload = displayPrevSearches
 
 searchButton.addEventListener("click", function(){
     
    displayWeather()
-   storeCity()
-   addLastSearch()
+   
 })
 
 // functions to fetch APIs and display current and forecast weather.
@@ -68,13 +69,13 @@ function displayWeather(){
         else {
             currUVI.setAttribute("class", "badge bg-danger");
         }
-        console.log(response2)
         fiveDayForecast(response2.daily)
         })
     
-        cityDate.textContent= city + " - " + moment().format('MMMM Do YYYY');
+        cityDate.textContent = city + " - " + moment().format('MMMM Do YYYY');
     })
-    
+    storeCity()
+   
 }
 
 // function to display 5-day forecast dynamically
@@ -82,7 +83,6 @@ function displayWeather(){
 function fiveDayForecast(forecast){
     fiveDayEl.innerHTML=" ";
     for(i=1; i<6; i++){
-        // console.log(forecast[i]);
         var unixDate=forecast[i].dt;
         var forecastDate=moment.unix(unixDate).format("MM/DD/YYYY");
     
@@ -120,18 +120,18 @@ function fiveDayForecast(forecast){
 
     function storeCity() {
         var searchTerm = cityEl.value;
-
-        if(searchHistory.indexOf(searchTerm.toLowerCase()) !== -1 || searchTerm === ""){
+        if(searchHistory.indexOf(searchTerm.toLowerCase()) !== -1 || searchTerm == ""){
             console.log("Not added to local storage because previous search already exists");
-        }else{
-        searchHistory.push(searchTerm.toLowerCase());
-        localStorage.setItem("prevSearch", JSON.stringify(searchHistory));
-        console.log(searchHistory);
-        }
+            console.log(searchTerm);
+            console.log(cityEl.value);
+                }else{
+                searchHistory.push(searchTerm.toLowerCase());
+                localStorage.setItem("prevSearch", JSON.stringify(searchHistory));
+                addLastSearch()
+                }
         
     }
 
-    
 
     function displayPrevSearches(){
         for(i=0; i<searchHistory.length; i++){
@@ -147,7 +147,6 @@ function fiveDayForecast(forecast){
                      var searchPrev=event.target.value;
                     cityEl.value = searchPrev;
                     displayWeather();
-                    console.log(cityEl.value);
                     })
     }
 }
@@ -159,14 +158,10 @@ function addLastSearch(){
     lastItemEl.setAttribute("value",lastItem);
     lastItemEl.textContent=lastItem;
     prevSearchEl.appendChild(lastItemEl);
-    console.log(lastItem);
 
     lastItemEl.addEventListener("click", function(event){
         var lastSearch=event.target.value;
        cityEl.value = lastSearch;
        displayWeather();
-       console.log(cityEl.value);
        })
 }
-
-

@@ -5,3 +5,41 @@
 li{
     list-style-type: none !important;
 }
+
+.display-modal{
+    display:block;
+    position:absolute;
+    top:100px;
+}
+
+.close-modal{
+    display:none;
+}
+
+#prev-button-area{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+#prev-button-area::-webkit-scrollbar {
+    display: none;
+  }
+
+button{
+    margin: 5px 0px;
+}
+
+.forecast-card{
+    width: 150px;
+    text-align: center;
+    border-radius: 10%;
+    padding-top: 10px;
+}
+
+#curr-weather-ul{
+    font-size: 20px;
+    width:225px;
+}

@@ -3,8 +3,11 @@ var cityEl = document.getElementById("input-city")
 var fiveDayEl=document.getElementById("five-day-forecast");
 var searchButton=document.getElementById("get-weather");
 var searchHistory = JSON.parse(localStorage.getItem("prevSearch")) || [];
-var prevSearchEl = document.getElementById("prev-searches");
+var prevSearchEl = document.getElementById("prev-button-area");
 var cityDate = document.getElementById("city-date");
+var fiveDayH3 = document.getElementById("five-day");
+var modal1 = document.getElementById('input-error')
+var modal1Close=document.getElementById("modal1-close")
 
 
 
@@ -12,18 +15,27 @@ onload = displayPrevSearches
 
 searchButton.addEventListener("click", function(){
     
+    if (cityEl.value == ""){
+        modal1.setAttribute("class","display-modal")
+        console.log("error");
+    }else{
    displayWeather()
-   
+    }
 })
+
+    modal1Close.addEventListener("click", function(){
+        modal1.setAttribute("class", "close-modal");
+    })
 
 // functions to fetch APIs and display current and forecast weather.
 function displayWeather(){
    var city = cityEl.value;
    var request1URL = "https://api.openweathermap.org/data/2.5/weather?q="+ city + ",us&units=imperial&appid=" + apiKey;
-    fetch(request1URL)
- 
+    
+   fetch(request1URL)
     .then(function(response1){
         return response1.json();
+        
     })
     
     .then(function(response1){
@@ -31,15 +43,15 @@ function displayWeather(){
         var lat=response1.coord.lat;
         var long=response1.coord.lon;
         var request2URL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&appid=" + apiKey + "&exclude=minutely,hourly,alerts";
-        
+       
         currWethEl.innerHTML=" ";
         var currTemp=document.createElement("li");
         var currWind=document.createElement("li");
         var currHumid=document.createElement("li");
             
-        currTemp.textContent= "Current Tempreture: "+ response1.main.temp + "\u00B0 F";
-        currWind.textContent= "Current Wind: "+ response1.wind.speed + " MPH";
-        currHumid.textContent= "Current Humidity: "+ response1.main.humidity + "%";
+        currTemp.textContent= "Tempreture: "+ response1.main.temp + "\u00B0 F";
+        currWind.textContent= "Wind: "+ response1.wind.speed + " MPH";
+        currHumid.textContent= "Humidity: "+ response1.main.humidity + "%";
 
         currWethEl.appendChild(currTemp);
         currWethEl.appendChild(currWind);
@@ -72,10 +84,15 @@ function displayWeather(){
         fiveDayForecast(response2.daily)
         })
     
-        cityDate.textContent = city + " - " + moment().format('MMMM Do YYYY');
+        cityDate.textContent = "Current Weather For: " + city.replace(/\w\S*/g, function(txt){
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }) + " - " + moment().format('MMMM Do YYYY');
+        fiveDayH3.textContent= "Five-Day Forecast";
+
+        console.log(response1);
     })
     storeCity()
-   
+  
 }
 
 // function to display 5-day forecast dynamically
@@ -90,7 +107,6 @@ function fiveDayForecast(forecast){
         var forecastWind=forecast[i].wind_speed;
         var forecastHumid=forecast[i].humidity;
 
-        
         var cardEl=document.createElement("div");
         var dateEl=document.createElement("h5");
         var imgEl=document.createElement("img");
@@ -100,6 +116,7 @@ function fiveDayForecast(forecast){
         var icon=forecast[i].weather[0].icon;
         var iconurl = "http://openweathermap.org/img/w/" + icon + ".png";
         
+        cardEl.setAttribute("class","forecast-card bg-info");
         dateEl.textContent=forecastDate;
         imgEl.src=iconurl;
         tempEl.textContent= "Temp: " + forecastTemp;
@@ -122,8 +139,7 @@ function fiveDayForecast(forecast){
         var searchTerm = cityEl.value;
         if(searchHistory.indexOf(searchTerm.toLowerCase()) !== -1 || searchTerm == ""){
             console.log("Not added to local storage because previous search already exists");
-            console.log(searchTerm);
-            console.log(cityEl.value);
+        
                 }else{
                 searchHistory.push(searchTerm.toLowerCase());
                 localStorage.setItem("prevSearch", JSON.stringify(searchHistory));
@@ -138,8 +154,11 @@ function fiveDayForecast(forecast){
             var prevItem = searchHistory[i];
             var prevItemEl=document.createElement("button");
 
-                prevItemEl.textContent = prevItem;
+                prevItemEl.textContent = prevItem.replace(/\w\S*/g, function(txt){
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
                 prevItemEl.setAttribute("value", prevItem)
+                prevItemEl.setAttribute("class", "btn btn-primary")
                 prevSearchEl.appendChild(prevItemEl);
                 
 
@@ -156,7 +175,10 @@ function addLastSearch(){
     var lastItemEl=document.createElement("button");
 
     lastItemEl.setAttribute("value",lastItem);
-    lastItemEl.textContent=lastItem;
+    lastItemEl.setAttribute("class", "btn btn-primary")
+    lastItemEl.textContent=lastItem.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
     prevSearchEl.appendChild(lastItemEl);
 
     lastItemEl.addEventListener("click", function(event){

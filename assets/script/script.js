@@ -8,6 +8,8 @@ var cityDate = document.getElementById("city-date");
 var fiveDayH3 = document.getElementById("five-day");
 var modal1 = document.getElementById('input-error')
 var modal1Close=document.getElementById("modal1-close")
+var modal2 = document.getElementById('data-error')
+var modal2Close=document.getElementById("modal2-close")
 
 
 
@@ -17,7 +19,6 @@ searchButton.addEventListener("click", function(){
     
     if (cityEl.value == ""){
         modal1.setAttribute("class","display-modal")
-        console.log("error");
     }else{
    displayWeather()
     }
@@ -33,10 +34,11 @@ function displayWeather(){
    var request1URL = "https://api.openweathermap.org/data/2.5/weather?q="+ city + ",us&units=imperial&appid=" + apiKey;
     
    fetch(request1URL)
+
     .then(function(response1){
         return response1.json();
-        
     })
+    
     
     .then(function(response1){
         var currWethEl= document.querySelector("#curr-weather-ul");
@@ -57,6 +59,7 @@ function displayWeather(){
         currWethEl.appendChild(currWind);
         currWethEl.appendChild(currHumid);
         
+
         fetch(request2URL)
 
         .then(function(response2) {
@@ -66,7 +69,7 @@ function displayWeather(){
         .then(function(response2){
         var currUVIli=document.createElement("span")
         var currUVI=document.createElement("span");
-        currUVIli.textContent="Current UV Index: "
+        currUVIli.textContent="UV Index: "
         currUVI.textContent= response2.current.uvi;
         currUVI.setAttribute("id", "UVI-span")
         currWethEl.appendChild(currUVIli);
@@ -83,17 +86,21 @@ function displayWeather(){
         }
         fiveDayForecast(response2.daily)
         })
-    
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+
         cityDate.textContent = "Current Weather For: " + city.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         }) + " - " + moment().format('MMMM Do YYYY');
         fiveDayH3.textContent= "Five-Day Forecast";
-
+        
+    
+        storeCity()
         console.log(response1);
-    })
-    storeCity()
-  
+    }).catch(error => alert(error.message));
 }
+
 
 // function to display 5-day forecast dynamically
 
@@ -158,7 +165,7 @@ function fiveDayForecast(forecast){
                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                 });
                 prevItemEl.setAttribute("value", prevItem)
-                prevItemEl.setAttribute("class", "btn btn-primary")
+                prevItemEl.setAttribute("class", "btn btn-primary prev-btn")
                 prevSearchEl.appendChild(prevItemEl);
                 
 

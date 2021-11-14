@@ -1,5 +1,69 @@
+*{color: rgba(0,0,0,0.6);
+text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
+                 0px -5px 35px rgba(255,255,255,0.3);
+}
+
+body{
+    background-image: url("https://free-images.com/lg/586d/sky_blue_cloud_cloudy.jpg");
+}
 #container{
     margin: 0;
+}
+
+#header{
+    background-image: url("https://free-images.com/lg/586d/sky_blue_cloud_cloudy.jpg");
+    background-size: cover!important;
+    background-attachment: fixed!important;
+    z-index: 9999;
+    border-bottom: #8daedb solid 2px;
+}
+
+
+h1, 
+h2, 
+h3, 
+.display-modal,
+.modal-title, 
+.modal-body, 
+.modal-header,
+.modal-footer {
+    text-align: center!important;
+    font-family: 'Audiowide', cursive!important;
+    text-shadow: 0px 3px 0px #6e98d2,
+                 0px 14px 10px rgba(0,0,0,0.15),
+                 0px 24px 2px rgba(0,0,0,0.1),
+                 0px 34px 30px rgba(0,0,0,0.1);
+    background-image: url("https://free-images.com/lg/586d/sky_blue_cloud_cloudy.jpg");
+    background-size: cover!important;
+    background-attachment: fixed!important
+}
+
+.modal-header{
+    justify-content: center!important;
+}
+
+.modal-content{
+    box-shadow:inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12);
+    text-align:center;
+    /* position:relative; */
+}
+
+ h1{
+     margin:20px;
+ }
+h2,h3{
+    font-size: 30px;
+}
+
+#get-weather{
+    background-image: url("https://free-images.com/lg/586d/sky_blue_cloud_cloudy.jpg");
+    background-size: cover!important;
+    background-attachment: fixed!important;
+    z-index: 9999;
+}
+
+#search-lbl, #prev-search-lbl{
+    margin-bottom: 30px!important;
 }
 
 li{
@@ -10,10 +74,30 @@ li{
     display:block;
     position:absolute;
     top:100px;
+    left: 35%;
+    margin-left: 0px!important;
+    margin-right: 0px;
+    width:400px;
 }
 
 .close-modal{
     display:none;
+}
+
+
+button{
+    margin-top: 10px;
+    padding:0.7em 1.7em;
+    border-radius:0.2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family: 'Audiowide', cursive!important;
+    font-weight:400;
+    color:#FFFFFF;
+    /* background-color:#3369ff; */
+    box-shadow:inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12);
+    text-align:center;
+    position:relative;
 }
 
 #prev-button-area{
@@ -24,22 +108,40 @@ li{
     overflow: scroll;
 }
 
+.prev-btn, #modal1-close{
+    background-color: #00469c!important;
+}
 #prev-button-area::-webkit-scrollbar {
     display: none;
   }
 
-button{
-    margin: 5px 0px;
+input{
+    text-align: center;
+    font-size: 20px;
+    background-image: url("https://free-images.com/lg/586d/sky_blue_cloud_cloudy.jpg");
+    background-size: cover!important;
+    background-attachment: fixed!important;
 }
 
 .forecast-card{
     width: 150px;
+    background-color: #5996d5!important;
     text-align: center;
     border-radius: 10%;
     padding-top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+     rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+      rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
+       rgba(0, 0, 0, 0.06) 0px 2px 1px,
+        rgba(0, 0, 0, 0.09) 0px 4px 2px,
+         rgba(0, 0, 0, 0.09) 0px 8px 4px,
+          rgba(0, 0, 0, 0.09) 0px 16px 8px,
+           rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 #curr-weather-ul{
-    font-size: 20px;
-    width:225px;
+    font-size: 30px;
+    text-align: center;
 }
+
+
